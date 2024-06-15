@@ -1,3 +1,4 @@
+import java.util.Collections;
 import java.util.List;
 
 import edu.upenn.cis573.graphs.*;
@@ -13,6 +14,27 @@ public class ReliablePathFinder extends PathFinder {
      * the assignment specification.
      */
     public List<Integer> findPath(int src, int dest) throws PathNotFoundException {
+        List<Integer> path1 = bfs(dest, src);
+        if (path1 != null && isValidPath(dest, src, path1)) {
+            Collections.reverse(path1);
+            return path1;
+        }
+
+        List<Integer> path2 = dfs(dest, src);
+        if (path2 != null && isValidPath(dest, src, path2)) {
+            Collections.reverse(path2);
+            return path2;
+        }
+
+        List<Integer> path3 = bfs(src, dest);
+        if (path3 != null && isValidPath(src, dest, path3)) {
+            return path3;
+        }
+
+        List<Integer> path4 = dfs(src, dest);
+        if (path4 != null && isValidPath(src, dest, path4)) {
+            return path4;
+        }
 
         throw new PathNotFoundException();
 
